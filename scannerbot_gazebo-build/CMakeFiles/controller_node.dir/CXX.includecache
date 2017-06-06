@@ -35,6 +35,8 @@ unistd.h
 -
 math.h
 -
+fstream
+-
 controller.h
 /home/franz/catkin_ws/src/scannerbot_gazebo/src/controller.h
 
