@@ -6,7 +6,11 @@ CMakeFiles/controller_node.dir/src/controller.cpp.o
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/controller.h
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.h
+ /opt/ros/kinetic/include/gazebo_msgs/ModelState.h
  /opt/ros/kinetic/include/gazebo_msgs/ModelStates.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelState.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelStateRequest.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelStateResponse.h
  /opt/ros/kinetic/include/geometry_msgs/Point.h
  /opt/ros/kinetic/include/geometry_msgs/Pose.h
  /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
@@ -77,7 +81,11 @@ CMakeFiles/controller_node.dir/src/main.cpp.o
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.cpp
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.h
+ /opt/ros/kinetic/include/gazebo_msgs/ModelState.h
  /opt/ros/kinetic/include/gazebo_msgs/ModelStates.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelState.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelStateRequest.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelStateResponse.h
  /opt/ros/kinetic/include/geometry_msgs/Point.h
  /opt/ros/kinetic/include/geometry_msgs/Pose.h
  /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
@@ -148,7 +156,11 @@ CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.cpp
  /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.h
+ /opt/ros/kinetic/include/gazebo_msgs/ModelState.h
  /opt/ros/kinetic/include/gazebo_msgs/ModelStates.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelState.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelStateRequest.h
+ /opt/ros/kinetic/include/gazebo_msgs/SetModelStateResponse.h
  /opt/ros/kinetic/include/geometry_msgs/Point.h
  /opt/ros/kinetic/include/geometry_msgs/Pose.h
  /opt/ros/kinetic/include/geometry_msgs/Quaternion.h

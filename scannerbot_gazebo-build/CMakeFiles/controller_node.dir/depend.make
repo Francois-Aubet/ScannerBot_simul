@@ -5,7 +5,11 @@ CMakeFiles/controller_node.dir/src/controller.cpp.o: /home/franz/catkin_ws/src/s
 CMakeFiles/controller_node.dir/src/controller.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/controller.h
 CMakeFiles/controller_node.dir/src/controller.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
 CMakeFiles/controller_node.dir/src/controller.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.h
+CMakeFiles/controller_node.dir/src/controller.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/ModelState.h
 CMakeFiles/controller_node.dir/src/controller.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/ModelStates.h
+CMakeFiles/controller_node.dir/src/controller.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelState.h
+CMakeFiles/controller_node.dir/src/controller.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelStateRequest.h
+CMakeFiles/controller_node.dir/src/controller.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelStateResponse.h
 CMakeFiles/controller_node.dir/src/controller.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Point.h
 CMakeFiles/controller_node.dir/src/controller.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Pose.h
 CMakeFiles/controller_node.dir/src/controller.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
@@ -76,7 +80,11 @@ CMakeFiles/controller_node.dir/src/main.cpp.o: /home/franz/catkin_ws/src/scanner
 CMakeFiles/controller_node.dir/src/main.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.cpp
 CMakeFiles/controller_node.dir/src/main.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
 CMakeFiles/controller_node.dir/src/main.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.h
+CMakeFiles/controller_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/ModelState.h
 CMakeFiles/controller_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/ModelStates.h
+CMakeFiles/controller_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelState.h
+CMakeFiles/controller_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelStateRequest.h
+CMakeFiles/controller_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelStateResponse.h
 CMakeFiles/controller_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Point.h
 CMakeFiles/controller_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Pose.h
 CMakeFiles/controller_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
@@ -147,7 +155,11 @@ CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /home/franz/catkin_ws/s
 CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
 CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.cpp
 CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.h
+CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/ModelState.h
 CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/ModelStates.h
+CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelState.h
+CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelStateRequest.h
+CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /opt/ros/kinetic/include/gazebo_msgs/SetModelStateResponse.h
 CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Point.h
 CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Pose.h
 CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
