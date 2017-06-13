@@ -16,8 +16,6 @@
 
 
 
-static const int amountOfPositions = 10;
-
 //double descriptor[sizeOfDescript][numberOfspot][numberOfScales];
 
 //double descriptor[sizeOfDescript][numberOfspot][numberOfScales] = {0};
@@ -58,6 +56,7 @@ NeuralPosition::NeuralPosition(){
     }*/
 }
 
+
 void NeuralPosition::buildDescri(double ranges[]){
     //std::cout << descriptor << std::endl;
 
@@ -69,38 +68,44 @@ void NeuralPosition::buildDescri(double ranges[]){
         }
     }
 
-    for(int i = 0; i < sizeOfDescript; i++){
-        for(int j = 0; j < numberOfspot; j++){
-            for(int k = 0; k++; k < numberOfScales){
-                descriptor[i][j][k] = 0;
-            }
-        }
-    }
     highestScaleBuild = 0;
 
     int sampled = 0;
+
     for(int i = 0; i < sizeOfDescript; i++){
+        rangesP[i] = ranges[i];
         sampled = sample(ranges[i]);
-        //descriptor[i][sample(ranges[i])][0] = 1;
         int k = - gaussDisbSensLength / 2;
+
         if(sampled > -k){                   // catch the whole thing
+#ifdef simplified
+    descriptor[i][0][0] = sampled + k;
+    descriptor[i][1][0] = sampled - k;
+#else
             for(int j = 0; j < gaussDisbSensLength; j++){
                 descriptor[i][sampled+k][0] = gaussDistribSensor[j];
                 k++;
             }
+#endif
         }
 
+
     }
+    extractAnomalies();
+
 }
 
 
 int NeuralPosition::sample(double a){
     int place = a / precision;
 
+#ifdef simplified
+#else
     if(numberOfspot < place){
         place = 0;
         std::cout << place << "error place set to 0";
     }
+#endif
     std::cout << place << ", ";
 
     highestScaleBuild = 0;
@@ -112,15 +117,21 @@ int NeuralPosition::sample(double a){
 void NeuralPosition::print(int scale){
 
     for(int i = 0; i < sizeOfDescript; i++){
-        std::cout << "[";
 
+        std::cout << "[";
+#ifdef simplified
+
+        std::cout << descriptor[i][0][0] << "," << descriptor[i][1][0];
+#else
         for(int j = 0; j < numberOfspot; j++){
             if(descriptor[i][j][scale] != 0){
                 std::cout << descriptor[i][j][scale] <<"(" << i << "," << j <<"),";
             }
         }
+ #endif
         std::cout << "] \n";
-    }
+
+}
     std::cout << std::endl;
 }
 
@@ -130,23 +141,20 @@ void NeuralPosition::print(int scale){
 
 
 void NeuralPosition::buildNextScale(){
-/*
-    for(int i = 0; i < sizeOfDescript; i++){
-        for(int j = 1; j < numberOfspot-1; j++){
-            descriptor[i][j][highestScaleBuild+1] = 0;
-        }
-    }
-/*
- * for each value multiply [1/4 1/2 1/4] (for ex.) and add it to the result array
- *
- *
- */
-   // std::cout << highestScaleBuild << "->" << highestScaleBuild+1 << " \n";
+
+
+
+    int k = - gaussDisbPlaCelLength / 2;
 
     for(int i = 0; i < sizeOfDescript; i++){
+
+#ifdef simplified
+    descriptor[i][0][highestScaleBuild+1] = descriptor[i][0][highestScaleBuild] + k;
+    descriptor[i][1][highestScaleBuild+1] = descriptor[i][1][highestScaleBuild] - k;
+
+#else
         for(int j = 1; j < numberOfspot-1; j++){
 
-            int k = - gaussDisbPlaCelLength / 2;
             if(j > -k){                   // catch the whole thing
                 for(int z = 0; z < gaussDisbPlaCelLength; z++){
                     descriptor[i][j+k][highestScaleBuild+1] +=(double) gaussDistribPlaCells[z] * (double)descriptor[i][j][highestScaleBuild];
@@ -155,15 +163,11 @@ void NeuralPosition::buildNextScale(){
              //   std::cout << (double) gaussDistribPlaCells[5] * (double)descriptor[i][j][highestScaleBuild] << " \n";
             }
         }
-    }
+ #endif
 
+}
     highestScaleBuild++;
 }
-
-
-/*  descriptor[i][j-1][highestScaleBuild+1] += 0.25 * descriptor[i][j][highestScaleBuild];
-  descriptor[i][j][highestScaleBuild+1] += 0.5 * descriptor[i][j][highestScaleBuild];
-  descriptor[i][j+1][highestScaleBuild+1] += 0.25 * descriptor[i][j][highestScaleBuild];*/
 
 
 void NeuralPosition::buildAllScales(){
@@ -177,7 +181,7 @@ void NeuralPosition::buildAllScales(){
 
 
 
-/// compare to descriptors
+/// compare two descriptors
 double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
     double similarity = 0;
     double similarityTmp = 0;
@@ -188,7 +192,81 @@ double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
     int similarityOnThisRay = 0;
     int numberOfSimilarRays = 0;
 
+
+    double deriveTreshold = 5;
+    std::vector<int> raysToignor(sizeOfDescript);
+
+    //find similar anomalies:
+    int i = 0;
+    std::list<AnomalyZone>::iterator it, it2 = desrciA.anomalyList.begin();
+    for(it = anomalyList.begin(); it!=anomalyList.end(); ++it, ++it2, i++){
+        AnomalyZone anom1 = *it;
+
+        AnomalyZone anom2 = *it2;
+
+        if(fabs(anom1.highestDerivate - anom2.highestDerivate) < deriveTreshold){
+            if(abs(anom1.startIndex - anom2.startIndex) < scaleComp+1){
+                std::cout   << "\n match! ";
+                for(int i = 0; i < anom1.length; i++){
+                    if(!(std::find(raysToignor.begin(), raysToignor.end(), anom1.startIndex + i) != raysToignor.end())){
+                        raysToignor.push_back(anom1.startIndex + i);
+                        std::cout   << ", " << anom1.startIndex + i;
+                    }
+                }
+                for(int i = 0; i < anom2.length; i++){
+                    if(!(std::find(raysToignor.begin(), raysToignor.end(), anom2.startIndex + i) != raysToignor.end())){
+                        raysToignor.push_back(anom2.startIndex + i);
+                        std::cout   << ", " << anom2.startIndex + i;
+                    }
+                }
+
+                std::cout   << "\n end of the adding " << std::endl;
+            }
+        }
+
+
+
+    }
+
+    /// this is most definitly not the best way to do it        */
+    /// This will be corected soon, but it is not that bad since two matching anomalies should be
+    /// aproximatly at the same place
+
+
+
+
     for(int i = 0; i < sizeOfDescript; i++){
+
+#ifdef simplified
+
+        int untGrenzOber, obGrenzOber, untGrenzUnter, obGrenzUnter;
+
+        if(desrciA.descriptor[i][0][scaleComp] < descriptor[i][0][scaleComp]){
+            untGrenzUnter = desrciA.descriptor[i][0][scaleComp];
+            obGrenzUnter = desrciA.descriptor[i][1][scaleComp];
+
+            untGrenzOber  = descriptor[i][0][scaleComp];
+            obGrenzOber  = descriptor[i][1][scaleComp];
+        } else {
+            untGrenzUnter = descriptor[i][0][scaleComp];
+            obGrenzUnter = descriptor[i][1][scaleComp];
+
+            untGrenzOber  = desrciA.descriptor[i][0][scaleComp];
+            obGrenzOber  = desrciA.descriptor[i][1][scaleComp];
+        }
+
+
+    int mitteU = (obGrenzUnter + untGrenzUnter) / 2;
+
+    if(untGrenzOber < mitteU){
+        numberOfSimilarRays++;
+    } else if(std::find(raysToignor.begin(), raysToignor.end(), i) != raysToignor.end()){
+        numberOfSimilarRays++;
+    }
+
+
+
+#else
         for(int j = 0; j < numberOfspot; j++){
             a = desrciA.descriptor[i][j][scaleComp];
             b = descriptor[i][j][scaleComp];
@@ -214,13 +292,63 @@ double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
         //if(similarityOnThisRay){numberOfSimilarRays++;}
        // if(similarityOnThisRay >= gaussDisbSensLength / 2){numberOfSimilarRays++;}
         similarityOnThisRay = 0;
-    }
-
+#endif
+}
     similarity = similarity / (double)sizeOfDescript;
 
     //return similarity;
     return numberOfSimilarRays / (double)sizeOfDescript;
 }
+
+
+
+
+
+
+void NeuralPosition::extractAnomalies(){
+    double averageDerivate = 0;
+    double derivate = 0;
+    int second = 0;
+    double threshold = 2.5; //gaussDisbSensLength / 200;
+
+    for(int i = 0; i < sizeOfDescript; i++){
+        if(i != sizeOfDescript-1){
+            second = i+1;
+        } else {
+            second = 0;
+        }
+
+        derivate = fabs(rangesP[i] - rangesP[second]);
+
+        if(derivate > threshold){
+            double rays[2] = {rangesP[i], rangesP[second]};
+            AnomalyZone newAn = AnomalyZone(rays, i, 2);
+            anomalyList.push_back(newAn);
+
+
+            std::cout   << "\n deviate: " << derivate << "anomaly added!!" << rangesP[second] << " at: " << i << std::endl;
+        }
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

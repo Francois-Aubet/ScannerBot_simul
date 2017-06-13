@@ -294,8 +294,8 @@ void Controller::savePosition(void){
     int k = place;
     
     for(int i = 0; i < sizeOfDescript; i++){
-        positions[positionIndex][i] = ranges[sizeOfDescript-k];
-        tmp[i] = ranges[sizeOfDescript-k];
+        positions[positionIndex][i] = ranges[i];  //ranges[sizeOfDescript-k];
+        tmp[i] = ranges[i];  //ranges[sizeOfDescript-k];
         k++;
         if(k == sizeOfDescript){ k=0;}
     }
@@ -672,6 +672,7 @@ void Controller::goForwardWithPoints(int angleI, double dist)
 
 
 
+
 void Controller::testingTheAlg(int numberOfPoints){
     int numberOfRecorded = 0;
     int numberOfRecords = 0;
@@ -685,7 +686,7 @@ void Controller::testingTheAlg(int numberOfPoints){
     //open file
     char nameFile[30] = "/home/franz/thetest# .txt";
     nameFile[20] = numberOfRecords + 48;
-    std::ofstream myfile("/home/franz/thetest#2.txt", ios::app);
+    std::ofstream myfile("/home/franz/thetest#5.3.txt", ios::app);
 
     //myfile.open("/home/franz/thetest#0.txt", ios::app);
 
@@ -699,7 +700,7 @@ void Controller::testingTheAlg(int numberOfPoints){
     neuralPos[0].buildAllScales();
 
     for(double i = -2; i < 2; i += 0.1){
-         for(double j = 0.1; j < 0.4; j += 0.1){
+         for(double j = -2; j < 2; j += 0.1){
                   setNewPos(i,j);
                   usleep(waitingActualTime);
                   savePosition();
@@ -707,13 +708,19 @@ void Controller::testingTheAlg(int numberOfPoints){
                   int placeOfNew = positionIndex-1;
 
                   neuralPos[placeOfNew].buildAllScales();     //positionIndex-1
+
+
                   //theTestPos.buildAllScales();
+                  //NeuralPosition static tmpPositio;
+                  //tmpPositio.buildDescri(ranges);
+                  //tmpPositio.buildAllScales();
 
                   int bestMatch;
                   for(bestMatch = 0; bestMatch < numberOfScales; bestMatch++){
 
+                      //tmpa = neuralPos[0].computeSimilarity(tmpPositio,bestMatch);
                       tmpa = neuralPos[0].computeSimilarity(neuralPos[placeOfNew],bestMatch);
-                      //tmpa = neuralPos[0].computeSimilarity(theTestPos,bestMatch);
+                      //tmpa = neuralPos[0].computeSimilarity(tmpPositio,bestMatch);
                         std::cout << tmpa * (double)sizeOfDescript << ", " << tmpa << std::endl;
                       if(tmpa >= 0.999){
                           break;

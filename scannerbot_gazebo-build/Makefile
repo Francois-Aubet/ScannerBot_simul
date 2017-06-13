@@ -477,6 +477,33 @@ gtest_main/fast:
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+src/anomalyZone.o: src/anomalyZone.cpp.o
+
+.PHONY : src/anomalyZone.o
+
+# target to build an object file
+src/anomalyZone.cpp.o:
+	$(MAKE) -f CMakeFiles/controller_node.dir/build.make CMakeFiles/controller_node.dir/src/anomalyZone.cpp.o
+.PHONY : src/anomalyZone.cpp.o
+
+src/anomalyZone.i: src/anomalyZone.cpp.i
+
+.PHONY : src/anomalyZone.i
+
+# target to preprocess a source file
+src/anomalyZone.cpp.i:
+	$(MAKE) -f CMakeFiles/controller_node.dir/build.make CMakeFiles/controller_node.dir/src/anomalyZone.cpp.i
+.PHONY : src/anomalyZone.cpp.i
+
+src/anomalyZone.s: src/anomalyZone.cpp.s
+
+.PHONY : src/anomalyZone.s
+
+# target to generate assembly for a file
+src/anomalyZone.cpp.s:
+	$(MAKE) -f CMakeFiles/controller_node.dir/build.make CMakeFiles/controller_node.dir/src/anomalyZone.cpp.s
+.PHONY : src/anomalyZone.cpp.s
+
 src/controller.o: src/controller.cpp.o
 
 .PHONY : src/controller.o
@@ -595,6 +622,9 @@ help:
 	@echo "... controller_node"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... src/anomalyZone.o"
+	@echo "... src/anomalyZone.i"
+	@echo "... src/anomalyZone.s"
 	@echo "... src/controller.o"
 	@echo "... src/controller.i"
 	@echo "... src/controller.s"

@@ -459,9 +459,9 @@
           <ray>
             <scan>
               <horizontal>
-                <samples>33</samples>
+                <samples>32</samples>
                 <resolution>1</resolution>
-                <min_angle>-3.1415</min_angle>		<!-- -2.26889 -->
+                <min_angle>-2.9451</min_angle>	<!-- this here is dependent from the number of rays -->	<!-- -2.26889 -->
                 <max_angle>3.1415</max_angle>		<!-- 2.2689 -->
               </horizontal>
               <vertical>
@@ -491,7 +491,7 @@
         <frameName>hokuyo::link</frameName>
       	</plugin>
           <always_on>1</always_on>
-          <update_rate>0.5</update_rate>
+          <update_rate>5</update_rate>
           <visualize>1</visualize>
         </sensor>
 

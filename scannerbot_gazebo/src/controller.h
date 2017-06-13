@@ -69,6 +69,9 @@ public:
 
   void testingTheAlg(int numberOfPoints);
 
+
+  //NeuralPosition tmpPositio;
+
  private:
   void static getHokuyoVal(const sensor_msgs::LaserScan laser);
   void static getOrientation(const sensor_msgs::Imu imu);
@@ -76,14 +79,14 @@ public:
 
 
 
-  static const int amountOfPositions = 200;
+  static const int amountOfPositions = 20000;
   static double ranges[sizeOfDescript];
 
   double static positions[amountOfPositions][sizeOfDescript];
 
   NeuralPosition static neuralPos[amountOfPositions];
 
- // NeuralPosition theTestPos;
+  //NeuralPosition static theTestPos;
 
   double static truePositions[amountOfPositions][2];
 

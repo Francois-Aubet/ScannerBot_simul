@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/controller_node.dir/src/main.cpp.o"
   "CMakeFiles/controller_node.dir/src/controller.cpp.o"
   "CMakeFiles/controller_node.dir/src/neuralPosition.cpp.o"
+  "CMakeFiles/controller_node.dir/src/anomalyZone.cpp.o"
   "devel/lib/scannerbot_gazebo/controller_node.pdb"
   "devel/lib/scannerbot_gazebo/controller_node"
 )

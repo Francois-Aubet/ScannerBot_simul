@@ -6,6 +6,36 @@
 
 #IncludeRegexTransform: 
 
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/anomalyZone.cpp
+ros/ros.h
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/ros/ros.h
+geometry_msgs/Twist.h
+-
+std_msgs/String.h
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/std_msgs/String.h
+signal.h
+-
+sensor_msgs/LaserScan.h
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/sensor_msgs/LaserScan.h
+termios.h
+-
+stdio.h
+-
+boost/thread/mutex.hpp
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/boost/thread/mutex.hpp
+boost/thread/thread.hpp
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/boost/thread/thread.hpp
+iostream
+-
+main.h
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
+anomalyZone.h
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/anomalyZone.h
+
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/anomalyZone.h
+main.h
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
+
 /home/franz/catkin_ws/src/scannerbot_gazebo/src/controller.cpp
 ros/ros.h
 /home/franz/catkin_ws/src/scannerbot_gazebo/src/ros/ros.h
@@ -113,6 +143,8 @@ main.h
 /home/franz/catkin_ws/src/scannerbot_gazebo/src/neuralPosition.h
 main.h
 /home/franz/catkin_ws/src/scannerbot_gazebo/src/main.h
+anomalyZone.h
+/home/franz/catkin_ws/src/scannerbot_gazebo/src/anomalyZone.h
 
 /opt/ros/kinetic/include/gazebo_msgs/ModelState.h
 string

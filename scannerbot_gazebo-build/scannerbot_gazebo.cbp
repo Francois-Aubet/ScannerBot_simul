@@ -452,6 +452,12 @@
          </MakeCommands>
       </Target>
       </Build>
+      <Unit filename="/home/franz/catkin_ws/src/scannerbot_gazebo/src/anomalyZone.cpp">
+         <Option target="controller_node"/>
+      </Unit>
+      <Unit filename="/home/franz/catkin_ws/src/scannerbot_gazebo/src/anomalyZone.h">
+         <Option target="controller_node"/>
+      </Unit>
       <Unit filename="/home/franz/catkin_ws/src/scannerbot_gazebo/src/controller.cpp">
          <Option target="controller_node"/>
       </Unit>

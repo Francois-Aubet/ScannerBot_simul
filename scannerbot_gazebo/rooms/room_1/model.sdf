@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <sdf version='1.6'>
   <model name='room_simplestOne'>
-<pose frame=''>-5 0 0 0 -0 0</pose>
+<pose frame=''>0 0 0 0 -0 0</pose>
     <link name='link'>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <inertial>
@@ -21,7 +21,7 @@
       <visual name='visual'>
         <geometry>
           <box>
-            <size>0.5 10.0 1</size>
+            <size>0.5 20.0 1</size>
           </box>
         </geometry>
         <material>
@@ -44,7 +44,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>0.5 10.0 1</size>
+            <size>0.5 20.0 1</size>
           </box>
         </geometry>
         <surface>
@@ -96,7 +96,7 @@
     </link>
 
     <link name='link_0'>
-      <pose frame=''>5 5 0 0 -0 0</pose>
+      <pose frame=''>10 10 0 0 -0 0</pose>
       <inertial>
         <mass>20</mass>
         <inertia>
@@ -113,7 +113,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>10 0.5 1</size>
+            <size>20 0.5 1</size>
           </box>
         </geometry>
         <material>
@@ -136,7 +136,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>10 0.5 1</size>
+            <size>20 0.5 1</size>
           </box>
         </geometry>
         <surface>
@@ -188,7 +188,7 @@
     </link>
 
     <link name='link_1'>
-      <pose frame=''>10 0 -0 0 -0 0</pose>
+      <pose frame=''>20 0 -0 0 -0 0</pose>
       <inertial>
         <mass>18.076</mass>
         <inertia>
@@ -205,7 +205,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>0.5 10 1</size>
+            <size>0.5 20 1</size>
           </box>
         </geometry>
         <material>
@@ -228,7 +228,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>0.5 10 1</size>
+            <size>0.5 20 1</size>
           </box>
         </geometry>
         <surface>
@@ -280,7 +280,7 @@
     </link>
 
     <link name='link_2'>
-      <pose frame=''>5 -5 -0 0 -0 0</pose>
+      <pose frame=''>10 -10 -0 0 -0 0</pose>
       <inertial>
         <mass>18.8281</mass>
         <inertia>
@@ -297,7 +297,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>10 0.5 1</size>
+            <size>20 0.5 1</size>
           </box>
         </geometry>
         <material>
@@ -320,7 +320,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <box>
-            <size>10 0.5 1</size>
+            <size>20 0.5 1</size>
           </box>
         </geometry>
         <surface>

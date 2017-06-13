@@ -132,7 +132,7 @@ catkin_package(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/scannerbot_gazebo_node.cpp)
- add_executable(controller_node src/main.cpp src/controller.cpp src/neuralPosition.cpp src/neuralPosition.h)
+ add_executable(controller_node src/main.cpp src/controller.cpp src/neuralPosition.cpp src/neuralPosition.h src/anomalyZone.cpp src/anomalyZone.h)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
