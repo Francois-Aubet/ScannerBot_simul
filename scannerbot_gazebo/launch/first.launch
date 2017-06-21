@@ -8,7 +8,7 @@
 
 
   <!-- Spawn the robot into Gazebo -->
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find scannerbot_gazebo)/rooms/room_5/model.sdf -sdf -x -10 -y 0 -z 0 -model theRoom " />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find scannerbot_gazebo)/rooms/room_3/model.sdf -sdf -x -10 -y 0 -z 0 -model theRoom " />
 
 
 </launch>

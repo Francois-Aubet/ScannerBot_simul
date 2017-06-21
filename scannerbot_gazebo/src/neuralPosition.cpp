@@ -89,8 +89,8 @@ void NeuralPosition::buildDescri(double ranges[]){
 #endif
         }
 
-
     }
+
     extractAnomalies();
 
 }
@@ -142,8 +142,6 @@ void NeuralPosition::print(int scale){
 
 void NeuralPosition::buildNextScale(){
 
-
-
     int k = - gaussDisbPlaCelLength / 2;
 
     for(int i = 0; i < sizeOfDescript; i++){
@@ -170,12 +168,12 @@ void NeuralPosition::buildNextScale(){
 }
 
 
+
 void NeuralPosition::buildAllScales(){
     for(int i = highestScaleBuild; i < numberOfScales - 1; i++){
         buildNextScale();
     }
 }
-
 
 
 
@@ -193,38 +191,86 @@ double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
     int numberOfSimilarRays = 0;
 
 
-    double deriveTreshold = 5;
+    double deriveTreshold = 3;                              ///TODO : nearest neighbor mechanism
+                                                            ///-> not optimal now
+
+
     std::vector<int> raysToignor(sizeOfDescript);
+    double minimum_dist = 100;
+    int placeOfBestMach = 0;
+
+    std::vector<int> takenPlaces(3,sizeOfDescript+1);
+    int taken = 12;
 
     //find similar anomalies:
     int i = 0;
     std::list<AnomalyZone>::iterator it, it2 = desrciA.anomalyList.begin();
-    for(it = anomalyList.begin(); it!=anomalyList.end(); ++it, ++it2, i++){
+    for(it = anomalyList.begin(); it!=anomalyList.end(); ++it, ++it2){
         AnomalyZone anom1 = *it;
 
-        AnomalyZone anom2 = *it2;
+        minimum_dist = 10 * sizeOfDescript;    i = 0;
 
-        if(fabs(anom1.highestDerivate - anom2.highestDerivate) < deriveTreshold){
-            if(abs(anom1.startIndex - anom2.startIndex) < scaleComp+1){
-                std::cout   << "\n match! ";
-                for(int i = 0; i < anom1.length; i++){
-                    if(!(std::find(raysToignor.begin(), raysToignor.end(), anom1.startIndex + i) != raysToignor.end())){
-                        raysToignor.push_back(anom1.startIndex + i);
-                        std::cout   << ", " << anom1.startIndex + i;
-                    }
-                }
-                for(int i = 0; i < anom2.length; i++){
-                    if(!(std::find(raysToignor.begin(), raysToignor.end(), anom2.startIndex + i) != raysToignor.end())){
-                        raysToignor.push_back(anom2.startIndex + i);
-                        std::cout   << ", " << anom2.startIndex + i;
-                    }
-                }
+        for(it2 = desrciA.anomalyList.begin(); it2!=desrciA.anomalyList.end(); ++it2){
+             AnomalyZone anom2 = *it2;
 
-                std::cout   << "\n end of the adding " << std::endl;
-            }
+             double dist = sqrt(pow(fabs(anom1.highestDerivate - anom2.highestDerivate),2)+pow(computeEcart(anom1.startIndex, anom2.startIndex),2));
+
+             if(dist < minimum_dist && taken != i && !(std::find(takenPlaces.begin(), takenPlaces.end(), i) != takenPlaces.end())){
+                std::cout << taken << "  " << i << "  "<< dist << "  "<< minimum_dist << "  \n";
+                minimum_dist = dist;   placeOfBestMach = i;
+             }
+             i++;
         }
 
 
+        takenPlaces.push_back(placeOfBestMach);
+        taken = placeOfBestMach;
+
+       // if(minimum_dist < 2+scaleComp){                  //TODO: could get ride of this if always truepositiv in anomaly detection
+            it2 = desrciA.anomalyList.begin();
+            for(i = 0; i < placeOfBestMach; i++, ++it2){}
+
+            AnomalyZone anom2 = *(it2);           // +1 ??
+
+            std::cout   << "\n match! ";
+            for(int i = 0; i < anom1.length; i++){
+             //   if(!(std::find(raysToignor.begin(), raysToignor.end(), anom1.startIndex + i) != raysToignor.end())){
+                    raysToignor.push_back(anom1.startIndex + i);
+                    std::cout   << ", " << anom1.startIndex + i;
+               // }
+            }
+            for(int i = 0; i < anom2.length; i++){
+                //if(!(std::find(raysToignor.begin(), raysToignor.end(), anom2.startIndex + i) != raysToignor.end())){
+                    raysToignor.push_back(anom2.startIndex + i);
+                    std::cout   << "; " << anom2.startIndex + i;
+                    if(anom2.startIndex + i > sizeOfDescript){ break; }
+                //}
+            }
+            std::cout   << "" << std::endl;
+
+        //}
+
+        /*    if(fabs(anom1.highestDerivate - anom2.highestDerivate) < deriveTreshold){
+                if(computeEcart(anom1.startIndex, anom2.startIndex)  < scaleComp+1){     //abs(anom1.startIndex - anom2.startIndex)
+                    std::cout   << "\n match! ";
+                    for(int i = 0; i < anom1.length; i++){
+                        if(!(std::find(raysToignor.begin(), raysToignor.end(), anom1.startIndex + i) != raysToignor.end())){
+                            raysToignor.push_back(anom1.startIndex + i);
+                            std::cout   << ", " << anom1.startIndex + i;
+                        }
+                    }
+                    for(int i = 0; i < anom2.length; i++){
+                        if(!(std::find(raysToignor.begin(), raysToignor.end(), anom2.startIndex + i) != raysToignor.end())){
+                            raysToignor.push_back(anom2.startIndex + i);
+                            std::cout   << ", " << anom2.startIndex + i;
+                        }
+                    }
+
+                    std::cout   << "\n end of the adding " << std::endl;
+                }
+            }
+
+        }*/
 
     }
 
@@ -260,7 +306,7 @@ double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
 
     if(untGrenzOber < mitteU){
         numberOfSimilarRays++;
-    } else if(std::find(raysToignor.begin(), raysToignor.end(), i) != raysToignor.end()){
+    } else if(std::find(raysToignor.begin(), raysToignor.end(), i) != raysToignor.end() || i == 0){
         numberOfSimilarRays++;
     }
 
@@ -309,7 +355,7 @@ void NeuralPosition::extractAnomalies(){
     double averageDerivate = 0;
     double derivate = 0;
     int second = 0;
-    double threshold = 2.5; //gaussDisbSensLength / 200;
+    double threshold = 3; //gaussDisbSensLength / 200;
 
     for(int i = 0; i < sizeOfDescript; i++){
         if(i != sizeOfDescript-1){
@@ -330,12 +376,38 @@ void NeuralPosition::extractAnomalies(){
         }
     }
 
-
-
-
-
 }
 
+
+
+
+
+
+
+
+
+
+int NeuralPosition::computeEcart(int a, int b){
+    if(a > b){
+        int tmp = a;
+        a = b;
+        b = tmp;
+    }
+
+    int firstPos = abs(sizeOfDescript +1 - b) + abs(a - 0);
+
+    int secondPos = abs(a - b);
+
+
+    if(firstPos > secondPos){
+      //  std::cout << "                                      " << secondPos << " from:" << a <<" " << b << std::endl;
+        return secondPos;
+    } else {
+      //  std::cout << "                                      " << firstPos << "from: " << a << " " << b << std::endl;
+        return firstPos;
+    }
+
+}
 
 
 

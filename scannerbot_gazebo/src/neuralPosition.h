@@ -27,6 +27,10 @@ public:
 private:
     int sample(double a);
 
+    int computeEcart(int a, int b);
+
+
+
     double rangesP[sizeOfDescript];
 
     double descriptor[sizeOfDescript][numberOfspot][numberOfScales];

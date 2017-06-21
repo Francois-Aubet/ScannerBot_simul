@@ -16,9 +16,11 @@
 
 AnomalyZone::AnomalyZone(double rays[], int begi, int leng){
     highestDerivate = 0;
+    int j = 0;
 
     for(int i = 0; i < leng; i++){
-        rayDist[i] = rays[i];
+        j= i+begi;
+        rayDist[i] = rays[j%sizeOfDescript];
     }
 
     startIndex = begi;

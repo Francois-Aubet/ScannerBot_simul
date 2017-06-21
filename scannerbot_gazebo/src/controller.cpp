@@ -112,7 +112,7 @@ void Controller::startSensors(void){
 void Controller::getHokuyoVal(const sensor_msgs::LaserScan laser){
     //ROS_INFO("size[%d]: ", laser.intensities.size());
     //std::cout << "size[%d]: " << laser.ranges.size();
-    for (unsigned int i=0; i<laser.ranges.size();i++)
+    for (unsigned int i=0; i<sizeOfDescript;i++) //laser.ranges.size()
     {
         ranges[i] = laser.ranges[i];
         //ROS_INFO("intens[%f]: ", laser.intensities[i]);
@@ -120,10 +120,13 @@ void Controller::getHokuyoVal(const sensor_msgs::LaserScan laser){
     }
 }
 void Controller::printHokuyoRanges(void){
+
     for (unsigned int i=0; i<sizeOfDescript;i++)
     {
         std::cout << "range[" << i << "]: " << ranges[i] << "\n";
+        //std::cout << "$"<< ranges[i] << "$ ";
     }
+
 }
 
 
@@ -679,14 +682,14 @@ void Controller::testingTheAlg(int numberOfPoints){
     int desI = 0;
     double desD = 0;
 
-    int waitingActualTime = 2000000;
+    int waitingActualTime = 500000;     //one half second
 
     double tmpa;
 
     //open file
     char nameFile[30] = "/home/franz/thetest# .txt";
     nameFile[20] = numberOfRecords + 48;
-    std::ofstream myfile("/home/franz/thetest#5.3.txt", ios::app);
+    std::ofstream myfile("/home/franz/thetest#3.3(0.95).txt", ios::app);
 
     //myfile.open("/home/franz/thetest#0.txt", ios::app);
 
@@ -722,7 +725,7 @@ void Controller::testingTheAlg(int numberOfPoints){
                       tmpa = neuralPos[0].computeSimilarity(neuralPos[placeOfNew],bestMatch);
                       //tmpa = neuralPos[0].computeSimilarity(tmpPositio,bestMatch);
                         std::cout << tmpa * (double)sizeOfDescript << ", " << tmpa << std::endl;
-                      if(tmpa >= 0.999){
+                      if(tmpa >= 0.935){
                           break;
                       }
                   }
