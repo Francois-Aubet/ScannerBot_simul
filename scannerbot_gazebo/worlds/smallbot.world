@@ -482,7 +482,7 @@
                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
                reading. -->
           <mean>0.0</mean>
-          <stddev>0.00</stddev>
+          <stddev>0.01</stddev>
         </noise>
           </ray>
          <!--<plugin name='laser/dist' filename='libgazebo_ros_gpu_laser.so'/>   libgazebo_ros_gpu_laser.so	  libRayPlugin.so  -->

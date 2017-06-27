@@ -5,13 +5,13 @@
 
 #define sizeOfDescript 32
 
-#define precision 0.01
+#define precision 0.02
 #define maxRange 30.0
 //#define numberOfspot (int)(maxRange / precision)
 
 
 
-#define simplified 2
+//#define simplified 2
 
 
 #ifdef simplified

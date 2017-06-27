@@ -123,7 +123,8 @@ void Controller::printHokuyoRanges(void){
 
     for (unsigned int i=0; i<sizeOfDescript;i++)
     {
-        std::cout << "range[" << i << "]: " << ranges[i] << "\n";
+        //std::cout << "range[" << i << "]: " << ranges[i] << "\n";
+        std::cout << " " << ranges[i] ;
         //std::cout << "$"<< ranges[i] << "$ ";
     }
 
@@ -323,7 +324,7 @@ void Controller::printPosition(int pos)
     for(int i = 0; i < sizeOfDescript; i++){
         int a = positions[pos][i];
         if(a < 10){ std::cout << " ";}
-        std::cout << a << ",";
+        std::cout << a << " ";
     }
     std::cout  << "] \n";
 }
@@ -689,7 +690,7 @@ void Controller::testingTheAlg(int numberOfPoints){
     //open file
     char nameFile[30] = "/home/franz/thetest# .txt";
     nameFile[20] = numberOfRecords + 48;
-    std::ofstream myfile("/home/franz/thetest#3.3(0.95).txt", ios::app);
+    std::ofstream myfile("/home/franz/thetest2#3.3(0.95).txt", ios::app);
 
     //myfile.open("/home/franz/thetest#0.txt", ios::app);
 
@@ -702,8 +703,8 @@ void Controller::testingTheAlg(int numberOfPoints){
     savePosition();
     neuralPos[0].buildAllScales();
 
-    for(double i = -2; i < 2; i += 0.1){
-         for(double j = -2; j < 2; j += 0.1){
+    for(double i = -2.05; i < 2.05; i += 0.1){
+         for(double j = -2.05; j < 2.05; j += 0.1){
                   setNewPos(i,j);
                   usleep(waitingActualTime);
                   savePosition();
