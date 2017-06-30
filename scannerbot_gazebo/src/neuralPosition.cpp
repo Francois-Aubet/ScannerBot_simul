@@ -35,6 +35,10 @@ double NeuralPosition::gaussDistribPlaCells[gaussDisbPlaCelLength] = {1}; /*{0.2
 
 
 
+
+
+
+
 NeuralPosition::NeuralPosition(){
 
     std::fill_n(gaussDistribSensor, gaussDisbSensLength, 1);
@@ -66,6 +70,7 @@ void NeuralPosition::buildDescri(double ranges[]){
                 descriptor[i][j][k] = 0;
             }
         }
+        //rangeIndexes[i] = 0;
     }
 
     highestScaleBuild = 0;
@@ -75,6 +80,7 @@ void NeuralPosition::buildDescri(double ranges[]){
     for(int i = 0; i < sizeOfDescript; i++){
         rangesP[i] = ranges[i];
         sampled = sample(ranges[i]);
+        //rangeIndexes[i] = sampled;
         int k = - gaussDisbSensLength / 2;
 
         if(sampled > -k){                   // catch the whole thing
@@ -90,9 +96,9 @@ void NeuralPosition::buildDescri(double ranges[]){
         }
 
     }
-
+#ifdef simplified
     extractAnomalies();
-
+#endif
 }
 
 
@@ -100,6 +106,7 @@ int NeuralPosition::sample(double a){
     int place = a / precision;
 
 #ifdef simplified
+#elif step4
 #else
     if(numberOfspot < place){
         place = 0;
@@ -137,35 +144,108 @@ void NeuralPosition::print(int scale){
 
 
 
+
+
 ///build higher scales:
 
 
 void NeuralPosition::buildNextScale(){
 
+#ifdef step4
+    tempoToZero();
+#endif
+
     int k = - gaussDisbPlaCelLength / 2;
 
-    for(int i = 0; i < sizeOfDescript; i++){
 
 #ifdef simplified
-    descriptor[i][0][highestScaleBuild+1] = descriptor[i][0][highestScaleBuild] + k;
-    descriptor[i][1][highestScaleBuild+1] = descriptor[i][1][highestScaleBuild] - k;
-
-#else
+    for(int i = 0; i < sizeOfDescript; i++){
+        descriptor[i][0][highestScaleBuild+1] = descriptor[i][0][highestScaleBuild] + k;
+        descriptor[i][1][highestScaleBuild+1] = descriptor[i][1][highestScaleBuild] - k;
+    }
+#elif step4
+    for(int i = 0; i < sizeOfDescript; i++){
         for(int j = 1; j < numberOfspot-1; j++){
 
             if(j > -k){                   // catch the whole thing
                 for(int z = 0; z < gaussDisbPlaCelLength; z++){
-                    descriptor[i][j+k][highestScaleBuild+1] +=(double) gaussDistribPlaCells[z] * (double)descriptor[i][j][highestScaleBuild];
+                    tempon[i][j+k] += (double) gaussDistribPlaCells[z] * (double)descriptor[i][j][highestScaleBuild];
                     k++;
                 }
              //   std::cout << (double) gaussDistribPlaCells[5] * (double)descriptor[i][j][highestScaleBuild] << " \n";
             }
+
+            int lowIndex = i-1;
+            int upperIndex = i + 1;
+
+            if(lowIndex < 0){ lowIndex = sizeOfDescript - 1;   }
+            if(upperIndex > sizeOfDescript - 1){upperIndex = 0; }
+
+            tempon[i][j] += descriptor[lowIndex][j][highestScaleBuild];
+            tempon[i][j] += descriptor[upperIndex][j][highestScaleBuild];
+
         }
+    }
+#else
+    for(int i = 0; i < sizeOfDescript; i++){
+        for(int j = 1; j < numberOfspot-1; j++){
+
+            if(j > -k){                   // catch the whole thing
+                for(int z = 0; z < gaussDisbPlaCelLength; z++){
+                    descriptor[i][j+k][highestScaleBuild+1] += (double) gaussDistribPlaCells[z] * (double)descriptor[i][j][highestScaleBuild];
+                    k++;
+                }
+             //   std::cout << (double) gaussDistribPlaCells[5] * (double)descriptor[i][j][highestScaleBuild] << " \n";
+            }
+
+        }
+    }
+
  #endif
 
-}
+
+#ifdef step4
+    copyTempoToDescri();
+#endif
+
+
     highestScaleBuild++;
 }
+
+
+
+
+void NeuralPosition::copyTempoToDescri(){
+
+    for(int i = 0; i < sizeOfDescript; i++){
+        for(int j = 0; j < numberOfspot; j++){
+
+            if(tempon[i][j] > 0){
+                descriptor[i][j][highestScaleBuild+1] = 1;
+            } else {
+                descriptor[i][j][highestScaleBuild+1] = 0;
+            }
+
+        }
+    }
+
+}
+
+
+void NeuralPosition::tempoToZero(){
+
+    for(int i = 0; i < sizeOfDescript; i++){
+        for(int j = 0; j < numberOfspot; j++){
+
+            tempon[i][j] = 0;
+
+        }
+    }
+
+}
+
+
+
 
 
 
@@ -193,7 +273,7 @@ double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
 
     double deriveTreshold = 3;                              ///TODO : nearest neighbor mechanism
                                                             ///-> not optimal now
-
+#ifndef step4
 
     std::vector<int> raysToignor(sizeOfDescript);
     double minimum_dist = 100;
@@ -273,6 +353,7 @@ double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
         }*/
 
     }
+#endif
 
     /// this is most definitly not the best way to do it        */
     /// This will be corected soon, but it is not that bad since two matching anomalies should be
@@ -312,8 +393,55 @@ double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
 
 
 
+#elif step4
+
+
+//        rangeIndexes
+        int index = rangeIndexes[i];
+
+        a = desrciA.descriptor[i][index][scaleComp];
+        b = descriptor[i][index][scaleComp];
+
+        if(a > 0 && b > 0){
+            std::cout << "first" << std::endl;
+            index = desrciA.rangeIndexes[i];
+
+            a = desrciA.descriptor[i][index][scaleComp];
+            b = descriptor[i][index][scaleComp];
+
+            if(a > 0 && b > 0){
+                numberOfSimilarRays++;
+             }
+        }
+
+
+  /*      for(int j = 1; j < numberOfspot - 1; j++){
+            a = desrciA.descriptor[i][j][scaleComp];
+            b = descriptor[i][j][scaleComp];
+
+            if(a != 0 && b != 0){
+                similarityTmp += a;
+                similarityTmp += b;
+                similarityOnThisRay++;
+            }
+            //similarity += (double)desrciA.descriptor[i][j][scaleComp];
+            //similarity += (double)descriptor[i][j][scaleComp];
+            total += a;
+            total += b;
+        }
+        similarityTmp = similarityTmp / total;
+        similarity += similarityTmp;
+
+        if(similarityTmp >= 0.5){numberOfSimilarRays++;}
+
+        similarityTmp = 0;
+        total = 0;
+
+        //if(similarityOnThisRay){numberOfSimilarRays++;}           */
+       // if(similarityOnThisRay >= gaussDisbSensLength / 2){numberOfSimilarRays++;}
+        similarityOnThisRay = 0;
 #else
-        for(int j = 0; j < numberOfspot; j++){
+        for(int j = 1; j < numberOfspot - 1; j++){
             a = desrciA.descriptor[i][j][scaleComp];
             b = descriptor[i][j][scaleComp];
 
@@ -341,7 +469,7 @@ double NeuralPosition::computeSimilarity(NeuralPosition desrciA, int scaleComp){
 #endif
 }
     similarity = similarity / (double)sizeOfDescript;
-
+   // numberOfSimilarRays = 32;
     //return similarity;
     return numberOfSimilarRays / (double)sizeOfDescript;
 }
@@ -355,7 +483,7 @@ void NeuralPosition::extractAnomalies(){
     double averageDerivate = 0;
     double derivate = 0;
     int second = 0;
-    double threshold = 3; //gaussDisbSensLength / 200;
+    double threshold = 1.5; //gaussDisbSensLength / 200;
 
     for(int i = 0; i < sizeOfDescript; i++){
         if(i != sizeOfDescript-1){

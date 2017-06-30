@@ -110,6 +110,25 @@ void Controller::startSensors(void){
       ros::spin();
 }
 void Controller::getHokuyoVal(const sensor_msgs::LaserScan laser){
+
+#ifdef averageNumberOfLaser
+
+
+    for (unsigned int i=0; i<sizeOfDescript;i++) //laser.ranges.size()
+    {
+        double average = 0;
+
+        for(int j = i * 10; j < (i+1) * 10; j++){
+            average += laser.ranges[j];
+        }
+
+        average *= 0.1;
+        ranges[i] = average;
+    }
+
+
+#else
+
     //ROS_INFO("size[%d]: ", laser.intensities.size());
     //std::cout << "size[%d]: " << laser.ranges.size();
     for (unsigned int i=0; i<sizeOfDescript;i++) //laser.ranges.size()
@@ -118,7 +137,17 @@ void Controller::getHokuyoVal(const sensor_msgs::LaserScan laser){
         //ROS_INFO("intens[%f]: ", laser.intensities[i]);
         //std::cout << "intens[" << i << "]: " << ranges[i] << "\n";
     }
+
+
+#endif
+
+   // if(laser.ranges.size() > 33){
+   //     std::cout << ".";
+    //}
+
 }
+
+
 void Controller::printHokuyoRanges(void){
 
     for (unsigned int i=0; i<sizeOfDescript;i++)
@@ -317,6 +346,8 @@ void Controller::savePosition(void){
     std::cout << "position " << positionIndex << " saved!\n";
     positionIndex++;
 }
+
+
 
 void Controller::printPosition(int pos)
 {
@@ -690,14 +721,17 @@ void Controller::testingTheAlg(int numberOfPoints){
     //open file
     char nameFile[30] = "/home/franz/thetest# .txt";
     nameFile[20] = numberOfRecords + 48;
-    std::ofstream myfile("/home/franz/thetest2#3.3(0.95).txt", ios::app);
+    std::ofstream myfile("/home/franz/thetest2.3(aver)(pos:7,_7).txt", ios::app);
 
     //myfile.open("/home/franz/thetest#0.txt", ios::app);
 
     if (myfile.is_open()) {
 
 
-    setNewPos(0,0);
+    double origin_x = 7.0;
+    double origin_y = -7.0;
+
+    setNewPos(origin_x,origin_y);
     usleep(waitingActualTime);
     positionIndex = 0;
     savePosition();
@@ -705,7 +739,7 @@ void Controller::testingTheAlg(int numberOfPoints){
 
     for(double i = -2.05; i < 2.05; i += 0.1){
          for(double j = -2.05; j < 2.05; j += 0.1){
-                  setNewPos(i,j);
+                  setNewPos(origin_x+i,origin_y+j);
                   usleep(waitingActualTime);
                   savePosition();
 
@@ -723,8 +757,9 @@ void Controller::testingTheAlg(int numberOfPoints){
                   for(bestMatch = 0; bestMatch < numberOfScales; bestMatch++){
 
                       //tmpa = neuralPos[0].computeSimilarity(tmpPositio,bestMatch);
-                      tmpa = neuralPos[0].computeSimilarity(neuralPos[placeOfNew],bestMatch);
-                      //tmpa = neuralPos[0].computeSimilarity(tmpPositio,bestMatch);
+
+                        tmpa = neuralPos[0].computeSimilarity(neuralPos[placeOfNew],bestMatch);
+
                         std::cout << tmpa * (double)sizeOfDescript << ", " << tmpa << std::endl;
                       if(tmpa >= 0.935){
                           break;

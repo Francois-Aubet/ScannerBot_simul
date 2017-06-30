@@ -459,7 +459,7 @@
           <ray>
             <scan>
               <horizontal>
-                <samples>33</samples>
+                <samples>321</samples>
                 <resolution>1</resolution>
                 <min_angle>-3.1415</min_angle>	<!-- -2.9451 this here is dependent from the number of rays -->	<!-- -2.26889 -->
                 <max_angle>3.1415</max_angle>		<!-- 2.2689 -->

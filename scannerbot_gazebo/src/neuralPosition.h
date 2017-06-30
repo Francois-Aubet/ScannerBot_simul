@@ -30,8 +30,14 @@ private:
     int computeEcart(int a, int b);
 
 
+    void copyTempoToDescri();
+
+    void tempoToZero();
+
 
     double rangesP[sizeOfDescript];
+
+    int rangeIndexes[sizeOfDescript];
 
     double descriptor[sizeOfDescript][numberOfspot][numberOfScales];
 
@@ -43,6 +49,8 @@ private:
     int static const gaussDisbPlaCelLength = 60; //21;
     double static gaussDistribPlaCells[gaussDisbPlaCelLength];
 
+
+    char tempon[sizeOfDescript][numberOfspot];
 
 
 };

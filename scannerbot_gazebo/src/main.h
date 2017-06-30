@@ -5,14 +5,15 @@
 
 #define sizeOfDescript 32
 
-#define precision 0.02
+#define precision 0.01
 #define maxRange 30.0
 //#define numberOfspot (int)(maxRange / precision)
 
+//#define step4 1
 
+#define simplified 2
 
-//#define simplified 2
-
+#define averageNumberOfLaser 320
 
 #ifdef simplified
     #define numberOfspot 2

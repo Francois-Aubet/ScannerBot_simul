@@ -79,7 +79,7 @@ public:
 
 
 
-  static const int amountOfPositions = 500;
+  static const int amountOfPositions = 1700;
   static double ranges[sizeOfDescript];
 
   double static positions[amountOfPositions][sizeOfDescript];
