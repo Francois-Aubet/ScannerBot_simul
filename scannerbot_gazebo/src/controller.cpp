@@ -721,15 +721,15 @@ void Controller::testingTheAlg(int numberOfPoints){
     //open file
     char nameFile[30] = "/home/franz/thetest# .txt";
     nameFile[20] = numberOfRecords + 48;
-    std::ofstream myfile("/home/franz/thetest2.3(aver)(pos:7,_7).txt", ios::app);
+    std::ofstream myfile("/home/franz/thetest3.4.txt", ios::app);
 
     //myfile.open("/home/franz/thetest#0.txt", ios::app);
 
     if (myfile.is_open()) {
 
 
-    double origin_x = 7.0;
-    double origin_y = -7.0;
+    double origin_x = 0;//7.0;
+    double origin_y = 0;//-7.0;
 
     setNewPos(origin_x,origin_y);
     usleep(waitingActualTime);
@@ -761,7 +761,7 @@ void Controller::testingTheAlg(int numberOfPoints){
                         tmpa = neuralPos[0].computeSimilarity(neuralPos[placeOfNew],bestMatch);
 
                         std::cout << tmpa * (double)sizeOfDescript << ", " << tmpa << std::endl;
-                      if(tmpa >= 0.935){
+                      if(tmpa >= 1){//0.935
                           break;
                       }
                   }
